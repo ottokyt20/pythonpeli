@@ -5,7 +5,7 @@ Pelaaja spawnataan bussipysäkille, ja hänellä on inventaario esineitä varten
 
 class Pelaaja:
     def __init__(self):
-        self.sijainti = 'bussipysäkki'
+        self.sijainti = 'bussipysäkki'  # Aloituspaikka
         self.inventaario = []
         self.pisteet = 0
         self.avattu_laatikko = False
@@ -18,16 +18,32 @@ class Pelaaja:
         
     def poista_inventaariosta(self, esine):
         """Poistaa esineen inventaariosta"""
-        if esine in self.inventaario:
+        loydetty = False
+        tavara = ''
+        for tavara in self.inventaario:
+            if tavara == esine:
+                loydetty = True
+                break
+        if loydetty:
             self.inventaario.remove(esine)
             
     def onko_inventaariossa(self, esine):
         """Tarkistaa onko esine inventaariossa"""
-        return esine in self.inventaario
+        tavara = ''
+        for tavara in self.inventaario:
+            if tavara == esine:
+                return True
+        return False
         
     def merkitse_paikka(self, paikka):
         """Merkitsee paikan vierailluksi"""
-        if paikka in self.kaytyja_paikkoja:
+        loydetty = False
+        for kayty_paikka in self.kaytyja_paikkoja:
+            if kayty_paikka == paikka:
+                loydetty = True
+                break
+        if loydetty:
+            print(f"Olet jo käynyt täällä: {paikka}")
             return False  # Käyty jo
         else:
             self.kaytyja_paikkoja.add(paikka)

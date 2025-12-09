@@ -38,7 +38,7 @@ def main():
     print(nykyinen_paikka['kuvaus'])
     
     while peli_käynnissä:
-        syöte = input("\n> ").strip().lower()
+        syöte = input("\n> ").lower()
         
         if syöte == "":
             print("Et antanut komentoa. Yritä uudelleen.")
@@ -73,19 +73,22 @@ def main():
                     print(uusi_paikka['pitkä_kuvaus'])
                 else:
                     print(f"\n{uusi_paikka['nimi']}")
-                    print(uusi_paikka['kuvaus']")
+                    print(uusi_paikka['kuvaus'])
                 
                 # Näytä esineet
                 if uusi_paikka['esineet']:
                     print("Näet täällä: ", end="")
-                    for i in range(len(uusi_paikka['esineet'])):
-                        if i > 0:
+                    ensimmainen = True
+                    for esine in uusi_paikka['esineet']:
+                        if ensimmainen:
+                            ensimmainen = False
+                        else:
                             print(", ", end="")
-                        print(uusi_paikka['esineet'][i], end="")
+                        print(esine, end="")
                     print()
                     
         elif komento == "ota":
-            if len(osat) < 2:
+            if osat[1:] == []:
                 print("Mitä haluat ottaa?")
             else:
                 esine = osat[1]
@@ -94,10 +97,13 @@ def main():
         elif komento in ["inv", "inventaario"]:
             if pelaaja.inventaario:
                 print("\nInventaariossasi: ", end="")
-                for i in range(len(pelaaja.inventaario)):
-                    if i > 0:
+                ensimmainen = True
+                for esine in pelaaja.inventaario:
+                    if ensimmainen:
+                        ensimmainen = False
+                    else:
                         print(", ", end="")
-                    print(pelaaja.inventaario[i], end="")
+                    print(esine, end="")
                 print()
             else:
                 print("\nInventaariosi on tyhjä.")
@@ -108,10 +114,13 @@ def main():
             print(paikka['pitkä_kuvaus'])
             if paikka['esineet']:
                 print("Näet täällä: ", end="")
-                for i in range(len(paikka['esineet'])):
-                    if i > 0:
+                ensimmainen = True
+                for esine in paikka['esineet']:
+                    if ensimmainen:
+                        ensimmainen = False
+                    else:
                         print(", ", end="")
-                    print(paikka['esineet'][i], end="")
+                    print(esine, end="")
                 print()
             else:
                 print("Täällä ei ole esineitä.")
