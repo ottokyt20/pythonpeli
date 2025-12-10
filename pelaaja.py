@@ -20,7 +20,7 @@ class Pelaaja:
         loydetty = False
        
         for tavara in self.inventaario:
-            if tavara == esine:
+            if tavara == esine: # Jos esine löytyy, 
                 loydetty = True
                 break
         if loydetty:
