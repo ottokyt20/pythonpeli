@@ -9,17 +9,16 @@ class Pelaaja:
         self.inventaario = []
         self.pisteet = 0
         self.avattu_laatikko = False
-        self.kaytyja_paikkoja = set()
-        self.vaihe = 1
+        self.kaytyja_paikkoja = [] # tyhjä joukko
         
     def lisaa_inventaarioon(self, esine):
-        """Lisää esineen inventaarioon"""
+        # Lisää esineen inventaarioon
         self.inventaario.append(esine)
         
     def poista_inventaariosta(self, esine):
-        """Poistaa esineen inventaariosta"""
+        # Poistaa esineen inventaariosta
         loydetty = False
-        tavara = ''
+       
         for tavara in self.inventaario:
             if tavara == esine:
                 loydetty = True
@@ -28,29 +27,30 @@ class Pelaaja:
             self.inventaario.remove(esine)
             
     def onko_inventaariossa(self, esine):
-        """Tarkistaa onko esine inventaariossa"""
-        tavara = ''
+        # Tarkistaa onko esine inventaariossa
+
         for tavara in self.inventaario:
             if tavara == esine:
                 return True
-        return False
+            else:
+                return False
         
     def merkitse_paikka(self, paikka):
-        """Merkitsee paikan vierailluksi"""
+        # Merkitsee paikan käydyksi, palauttaa True jos paikka on uusi
         loydetty = False
         for kayty_paikka in self.kaytyja_paikkoja:
             if kayty_paikka == paikka:
                 loydetty = True
                 break
         if loydetty:
-            print(f"Olet jo käynyt täällä: {paikka}")
+            print(f"Olet jo vieraillut  täällä: {paikka}")
             return False  # Käyty jo
         else:
-            self.kaytyja_paikkoja.add(paikka)
+            self.kaytyja_paikkoja.append(paikka)
             return True  # Uusi paikka
         
     def nayta_tilastot(self):
-        """Näyttää pelaajan tilastot"""
+        # Näyttää pelaajan tilastot
         print(f"\n=== TILASTOSI ===")
         print(f"Käytyjä paikkoja: {(self.kaytyja_paikkoja)}")
         print(f"Esineitä mukana: {(self.inventaario)}")
