@@ -1,11 +1,5 @@
-"""
-HÄRMÄLÄN SEIKKAILU - Tekstiseikkailupeli
-Pelin pääohjelma
 
-Tavoite: Tutki Härmälää, kerää esineitä ja pisteitä,
-löydä mystinen laatikko ja vanha avain, ja avaa laatikko
-saadaksesi kultaisen aarteen. Vie aarre rantaravintolaan voittaaksesi!
-"""
+# Pääohjelma tekstiseikkailupeliin, Härmälän seikkailu
 
 from paikat import paikat
 from pelaaja import Pelaaja
@@ -13,8 +7,8 @@ from komennot import (
     liiku, kerää_esine
 )
 
+# Pääohjelma
 def main():
-    """Pelin pääsilmukka"""
     print("="*60)
     print("    HÄRMÄLÄN SEIKKAILU - Tekstiseikkailupeli")
     print("="*60)
@@ -44,8 +38,7 @@ def main():
             print("Et antanut komentoa. Yritä uudelleen.")
             continue
         
-        osat = syöte.split() # Jaa syöte osiin
-        komento = osat[0] # Ensimmäinen sana on komento
+        komento = syöte.split()[0] # Ensimmäinen sana on komento, käyttäjän syötteestä
         
         if komento == "apua" or komento == "help":
             print("\nKomennot:")
@@ -57,50 +50,38 @@ def main():
             print("  lopeta - Lopeta peli")
             
         elif komento == "pohjoinen" or komento == "etelä" or komento == "itä" or komento == "länsi":
-            # Muunna lyhenteet täysiksi
-            suuntamap = {
-                "pohjoinen": "pohjoinen",
-                "etelä": "etelä",
-                "itä": "itä",
-                "länsi": "länsi"
-            }
-            suunta = suuntamap[komento]
+            suunta = komento 
             
-            uusi_sijainti = liiku(pelaaja.sijainti, suunta)
-            if uusi_sijainti:
-                pelaaja.sijainti = uusi_sijainti
+            uusi_paikka = liiku(pelaaja.sijainti, suunta)
+
+
+            
+            if uusi_paikka:
+                pelaaja.merkitse_paikka(uusi_paikka)
+                pelaaja.sijainti = uusi_paikka
                 uusi_paikka = paikat[pelaaja.sijainti]
-                
-                # Tarkista onko uusi paikka
-                if pelaaja.merkitse_paikka(pelaaja.sijainti):
-                    print(f"\n{uusi_paikka['nimi']}")
-                    print(uusi_paikka['pitkä_kuvaus'])
-                else:
-                    print(f"\n{uusi_paikka['nimi']}")
-                    print(uusi_paikka['kuvaus'])
-                
-                # Näytä esineet
+
+                print(f"\n{uusi_paikka['nimi']}")
+                print(uusi_paikka['kuvaus'])
+                # Tarkista onko paikalla esineitä
                 if uusi_paikka['esineet']:
-                    print("Näet täällä: ", end="")
-                    ensimmainen = True
+                    print("Näet täällä: ")
                     for esine in uusi_paikka['esineet']:
-                        if ensimmainen:
-                            ensimmainen = False
-                        else:
-                            print(", ", end="")
-                        print(esine, end="")
-                    print()
+                        print(f" - {esine}")
                     
+
+
+        # Kerää esine
         elif komento == "ota":
-            if osat[1:] == []:
+            if len(syöte.split()) < 2:
                 print("Mitä haluat ottaa?")
             else:
-                esine = osat[1]
+                esine = syöte.split()[1]
                 kerää_esine(pelaaja.sijainti, esine, pelaaja.inventaario)
                     
-        elif komento in ["inv", "inventaario"]:
+        elif komento == "inv" or komento == "inventaario":
             # Tarkista onko inventaariossa esineitä
-            if pelaaja.inventaario:
+            if len(pelaaja.inventaario) > 0:
                 # Tulosta inventaarion otsikko
                 print("\nInventaariossasi: ", end="")
                 
@@ -120,7 +101,8 @@ def main():
                 print()
             else:
                 # Jos inventaario on tyhjä
-                print("\nInventaariosi on tyhjä.")
+                print()
+                print("Inventaariosi on tyhjä.")
                 
         elif komento == "katso":
             # Hae nykyisen paikan tiedot
@@ -131,7 +113,7 @@ def main():
             print(paikka['pitkä_kuvaus'])
             
             # Tarkista onko paikalla esineitä
-            if paikka['esineet']:
+            if len(paikka['esineet']) > 0:
                 # Tulosta esinelistan otsikko
                 print("Näet täällä: ", end="")
                 
@@ -153,11 +135,15 @@ def main():
                 # Jos paikalla ei ole esineitä
                 print("Täällä ei ole esineitä.")
                 
+
+        # Näytä pelaajan tilastot
         elif komento == "tilastot":
             pelaaja.nayta_tilastot()
-            print(f"Vaihe: {pelaaja.vaihe}/3")
-            
+            print(f"Sijaintisi: {pelaaja.sijainti}")
+
+        # Lopeta peli
         elif komento == "lopeta" or komento == "quit":
+            print(f"Kirjoitit komennon {komento}. Peli päättyy.")
             print("\nKiitos pelaamisesta!")
             peli_käynnissä = False
             

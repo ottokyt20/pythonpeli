@@ -4,9 +4,11 @@ Pelaaja spawnataan bussipysäkille, ja hänellä on inventaario esineitä varten
 """
 
 class Pelaaja:
+
+    # Alustetaan pelaajan tila, self viittaa pelaajaan
     def __init__(self):
         self.sijainti = 'bussipysäkki'  # Aloituspaikka
-        self.inventaario = []
+        self.inventaario = [] # lista, inventaario esineitä varten, aluksi tyhjä
         self.pisteet = 0
         self.avattu_laatikko = False
         self.kaytyja_paikkoja = [] # tyhjä joukko
@@ -19,6 +21,7 @@ class Pelaaja:
         # Poistaa esineen inventaariosta
         loydetty = False
        
+       # Käy läpi inventaario, for loopilla
         for tavara in self.inventaario:
             if tavara == esine: # Jos esine löytyy, 
                 loydetty = True
@@ -28,7 +31,8 @@ class Pelaaja:
             
     def onko_inventaariossa(self, esine):
         # Tarkistaa onko esine inventaariossa
-
+        
+        # Käy läpi inventaario, for loopilla
         for tavara in self.inventaario:
             if tavara == esine:
                 return True
@@ -37,17 +41,16 @@ class Pelaaja:
         
     def merkitse_paikka(self, paikka):
         # Merkitsee paikan käydyksi, palauttaa True jos paikka on uusi
-        loydetty = False
+        
+        # Tarkista onko paikka jo käyty
         for kayty_paikka in self.kaytyja_paikkoja:
             if kayty_paikka == paikka:
-                loydetty = True
-                break
-        if loydetty:
-            print(f"Olet jo vieraillut  täällä: {paikka}")
-            return False  # Käyty jo
-        else:
-            self.kaytyja_paikkoja.append(paikka)
-            return True  # Uusi paikka
+                print(f"Olet jo vieraillut täällä: {paikka}")
+                return False
+        
+        # Jos ei ole käyty, lisää listaan
+        self.kaytyja_paikkoja.append(paikka)
+        return True  
         
     def nayta_tilastot(self):
         # Näyttää pelaajan tilastot
