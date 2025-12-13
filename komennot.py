@@ -21,8 +21,8 @@ def liiku(nykyinen_paikka, suunta):
             if yhteys == suunta:
                 suunta_loytyy = True
                 break
-        
-        if suunta_loytyy:
+
+        if suunta_loytyy == True:
             uusi_paikka = paikka['yhteydet'][suunta]
             print(f"Menet {suunta}...")
             return uusi_paikka
@@ -43,7 +43,7 @@ def kerää_esine(nykyinen_paikka, esine, pelaajan_tavarat):
             paikka_loytyy = True
             break
     
-    if paikka_loytyy:
+    if paikka_loytyy == True:
         paikka = paikat[nykyinen_paikka]
         
         # Tarkista onko esine paikalla
@@ -53,7 +53,7 @@ def kerää_esine(nykyinen_paikka, esine, pelaajan_tavarat):
                 esine_loytyy = True
                 break
         
-        if esine_loytyy:
+        if esine_loytyy == True:
             paikka['esineet'].remove(esine)
             pelaajan_tavarat.append(esine)
             print(f"Otat esineen: {esine}")
