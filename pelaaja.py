@@ -1,7 +1,3 @@
-"""
-Pelaajan tilanhallinta
-Pelaaja spawnataan bussipysäkille, ja hänellä on inventaario esineitä varten sekä pisteet.
-"""
 
 class Pelaaja:
 
@@ -11,7 +7,7 @@ class Pelaaja:
         self.inventaario = [] # lista, inventaario esineitä varten, aluksi tyhjä
         self.pisteet = 0
         self.avattu_laatikko = False
-        self.kaytyja_paikkoja = [] # tyhjä joukko
+        self.kaytyja_paikkoja = [] # lista käydyistä paikoista, aluksi tyhjä
         
     def lisaa_inventaarioon(self, esine):
         # Lisää esineen inventaarioon
@@ -19,15 +15,11 @@ class Pelaaja:
         
     def poista_inventaariosta(self, esine):
         # Poistaa esineen inventaariosta
-        loydetty = False
-       
-       # Käy läpi inventaario, for loopilla
-        for tavara in self.inventaario:
-            if tavara == esine: # Jos esine löytyy, 
-                loydetty = True
-                break
-        if loydetty:
+        if esine in self.inventaario:
+            print(f"Poistetaan esine inventaariosta: {esine}")
             self.inventaario.remove(esine)
+        else:
+            print(f"Esine ei ole sinulla inventaariossa: {esine}")
             
     def onko_inventaariossa(self, esine):
         # Tarkistaa onko esine inventaariossa
@@ -48,7 +40,7 @@ class Pelaaja:
                 print(f"Olet jo vieraillut täällä: {paikka}")
                 return False
         
-        # Jos ei ole käyty, lisää listaan
+        # Jos paikka on uusi, lisää se käytyjen paikkojen listaan
         self.kaytyja_paikkoja.append(paikka)
         return True  
         
