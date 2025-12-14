@@ -26,8 +26,8 @@ def main():
     print(nykyinen_paikka['kuvaus'])
     
     while peli_käynnissä == True:
-        syöte = input().lower()
-        
+        syöte = input("\n> ").lower()
+
         if syöte == "":
             print("Et antanut komentoa. Yritä uudelleen.")
             continue
@@ -83,7 +83,6 @@ def main():
                     
         elif komento in ["inv", "inventaario"]:
             if pelaaja.inventaario:
-                onko_inventaariossa = True
                 print("Inventaariosi sisältää:")
                 for esine in pelaaja.inventaario:
                     print(f"- {esine}")

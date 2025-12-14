@@ -1,5 +1,4 @@
 #komennot ja pelaajan luokka
-from paikat import paikat
 
 class Pelaaja:
 
@@ -22,16 +21,6 @@ class Pelaaja:
             self.inventaario.remove(esine)
         else:
             print(f"Esine ei ole sinulla inventaariossa: {esine}")
-            
-    def onko_inventaariossa(self, esine):
-        # Tarkistaa onko esine inventaariossa
-        
-        # Käy läpi inventaario, for loopilla
-        for tavara in self.inventaario:
-            if tavara == esine:
-                return True
-            else:
-                return False
         
     def merkitse_paikka(self, paikka):
         # Merkitsee paikan käydyksi, palauttaa True jos paikka on uusi

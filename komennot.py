@@ -1,5 +1,4 @@
 from paikat import paikat
-from pelaaja import Pelaaja
 
 def liiku(nykyinen_paikka, suunta):
         # Tarkista onko paikka olemassa
