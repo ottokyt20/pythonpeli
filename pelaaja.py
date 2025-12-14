@@ -1,3 +1,5 @@
+#komennot ja pelaajan luokka
+from paikat import paikat
 
 class Pelaaja:
 
@@ -50,3 +52,6 @@ class Pelaaja:
         print(f"Käytyjä paikkoja: {(self.kaytyja_paikkoja)}")
         print(f"Esineitä mukana: {(self.inventaario)}")
         
+
+
+    

@@ -1,12 +1,8 @@
 
-
 from paikat import paikat
-from pelaaja import (
-    Pelaaja, lisää_inventaarioon, poista_inventaariosta, onko_inventaariossa, merkitse_paikka, nayta_tilastot
-)
-from komennot import (
-    liiku, kerää_esine
-)
+from pelaaja import Pelaaja
+from komennot import liiku, keraa_esine
+
 
 # Pääohjelma
 def main():
@@ -43,7 +39,7 @@ def main():
         if komento == "apua" or komento == "help":
             print("\nKomennot:")
             print("  pohjoinen/etelä/itä/länsi - Liiku valittuun suuntaan")
-            print("  ota - Kerää esine paikasta")
+            print("  ota \"esine\" - Kerää esine paikasta")
             print("  inv/inventaario - Näytä inventaario")
             print("  katso - Katso ympärillesi")
             print("  tilastot - Näytä tilastot")
@@ -71,16 +67,19 @@ def main():
                 if uusi_paikka['esineet']:
                     print("Näet täällä: ")
                     for esine in uusi_paikka['esineet']:
-                        if ensimmainen:
-                            ensimmainen = False
-                        else:
-                            print(", ", end="")
-                        print(esine, end="")
-                    print()
+                        print(f" - {esine}")
                     
         elif komento == "ota": 
+            osat = syöte.split()
+            if len(osat) < 2:
+                print("Mitä haluat ottaa?")
+            else:
                 esine = osat[1]
-                kerää_esine(pelaaja.sijainti, esine, pelaaja.inventaario)
+                paikka = paikat[pelaaja.sijainti]
+                keraa_esine(pelaaja, paikka, esine)
+
+                
+    
                     
         elif komento in ["inv", "inventaario"]:
             if pelaaja.inventaario:
@@ -96,7 +95,7 @@ def main():
             
             # Tulosta paikan nimi ja pitkä kuvaus
             print(f"\n{paikka['nimi']}")
-            print(paikka['pitkä_kuvaus'])
+            print(paikka['kuvaus'])
             
             # Tarkista onko paikalla esineitä
             if len(paikka['esineet']) > 0:

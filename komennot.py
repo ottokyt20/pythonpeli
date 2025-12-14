@@ -1,67 +1,41 @@
-"""
-Komentojen käsittely
-"""
-
 from paikat import paikat
+from pelaaja import Pelaaja
 
 def liiku(nykyinen_paikka, suunta):
-    # Tarkista onko paikka olemassa
-    paikka_loytyy = False
-    for paikka_avain in paikat:
-        if paikka_avain == nykyinen_paikka:
-            paikka_loytyy = True
-            break
-    
-    if paikka_loytyy:
-        paikka = paikat[nykyinen_paikka]
-        
-        # Tarkista onko suunta mahdollinen
-        suunta_loytyy = False
-        for yhteys in paikka['yhteydet']:
-            if yhteys == suunta:
-                suunta_loytyy = True
-                break
-
-        if suunta_loytyy == True:
-            uusi_paikka = paikka['yhteydet'][suunta]
-            print(f"Menet {suunta}...")
-            return uusi_paikka
-        else:
-            print(f"Et voi mennä {suunta}.")
-            return False
-    else:
-        print(f"Paikka '{nykyinen_paikka}' ei ole saatavilla.")
-        return False
-
-
-# Kerää esine paikasta
-def kerää_esine(nykyinen_paikka, esine, pelaajan_tavarat):
-    # Tarkista onko paikka olemassa
-    paikka_loytyy = False
-    for paikka_avain in paikat:
-        if paikka_avain == nykyinen_paikka:
-            paikka_loytyy = True
-            break
-    
-    if paikka_loytyy == True:
-        paikka = paikat[nykyinen_paikka]
-        
-        # Tarkista onko esine paikalla
-        esine_loytyy = False
-        for paikan_esine in paikka['esineet']:
-            if paikan_esine == esine:
-                esine_loytyy = True
+        # Tarkista onko paikka olemassa
+        paikka_loytyy = False
+        for paikka_avain in paikat:
+            if paikka_avain == nykyinen_paikka:
+                paikka_loytyy = True
                 break
         
-        if esine_loytyy == True:
-            paikka['esineet'].remove(esine)
-            pelaajan_tavarat.append(esine)
-            print(f"Otat esineen: {esine}")
-            return True
-        else:
-            print(f"Täällä ei ole esinettä '{esine}'.")
-            return False
-    else:
-        print(f"Virhe: Paikka '{nykyinen_paikka}' ei ole olemassa.")
-        return False
+        if paikka_loytyy:
+            paikka = paikat[nykyinen_paikka]
+            
+            # Tarkista onko suunta mahdollinen
+            suunta_loytyy = False
+            for yhteys in paikka['yhteydet']:
+                if yhteys == suunta:
+                    suunta_loytyy = True
+                    break
 
+            if suunta_loytyy == True:
+                uusi_paikka = paikka['yhteydet'][suunta]
+                print(f"Menet {suunta}...")
+                return uusi_paikka
+            else:
+                print(f"Et voi mennä suuntaan: {suunta}.")
+                return False
+        else:
+            print(f"Paikka '{nykyinen_paikka}' ei ole saatavilla.")
+            return False
+        
+
+def keraa_esine(pelaaja, paikka, esine):
+    # Kerää esineen paikasta
+    if esine in paikka['esineet']:
+        pelaaja.lisaa_inventaarioon(esine)
+        paikka['esineet'].remove(esine)
+        print(f"Otat esineen: {esine}")
+    else:
+        print(f"Esinettä '{esine}' ei löydy tästä paikasta.")
