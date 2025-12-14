@@ -49,3 +49,4 @@ class Pelaaja:
         print(f"\n=== TILASTOSI ===")
         print(f"Käytyjä paikkoja: {(self.kaytyja_paikkoja)}")
         print(f"Esineitä mukana: {(self.inventaario)}")
+        
